@@ -1,0 +1,40 @@
+#include <stdio.h>
+int main() {
+    char a[502] = { '0' }, b[502] = {'0'};
+    int i, j, k,w1=0,w2=0, e[502] = { 0 }, c[502] = { 0 }, d[502] = { 0 }, f[502] = { 0 }, g[502] = { 0 };
+    scanf("%s%s", &a, &b);
+    for (i = 0; i <= 501; i++) {
+        if (a[i] == 0) {
+            w1 = i;
+            break;
+        }
+        f[i] = a[i] - '0';
+    }
+    for (i = 0; i <= 501; i++) {
+        if (b[i] == 0) {
+            w2 = i;
+            break;
+        }
+        g[i] = b[i] - '0';
+    }
+    i = w1 - 1;
+    j = w2 - 1;
+    for (k = 0; k <=i; k++) {
+        c[k] = f[i - k];
+    }
+    for (k = 0; k <= j; k++) {
+        d[k] = g[j - k];
+    }
+    for (k = 0; k <= i || k <= j; k++) {
+        e[k] += (c[k] + d[k]);
+        if (e[k] > 9) {
+            e[k + 1] += e[k] / 10;
+            e[k] = e[k] % 10;
+        }
+    }
+    for (k = 501; k > 0 && e[k] == 0; k--);
+    for (i = k; i >= 0; i--) {
+        printf("%d", e[i]);
+    }
+    return 0;
+}
