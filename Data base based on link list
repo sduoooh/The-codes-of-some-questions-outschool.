@@ -1,0 +1,165 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/*  这里是结构体定义和函数声明部分：
+**  safe_num 是链表当前数据容量；
+**  node 指链表的一个节点；
+**  create 是创建链表的函数；
+**  insert 是插入数据的函数；
+**  use  是调用数据的函数；
+**  delete 是删除数据的函数；
+**  search 是查找数据的函数；
+**  node 指链表的一个节点；
+*/
+typedef struct node
+{
+	int data;
+	struct node* next;
+}node;
+
+int safe_num = 0;
+
+struct node *list_head;
+struct node *temp;
+
+void create()
+{
+	list_head = calloc(0, sizeof(node));
+	temp = calloc(0, sizeof(node));
+	list_head->next = NULL;
+	temp = list_head;
+}
+
+void insert(int a)
+{
+	node* inter = calloc(0, sizeof(node));
+	inter->next = NULL;
+	inter->data = a;
+	temp->next = inter;
+	temp = inter;
+	safe_num++;
+}
+
+int use(int number)
+{
+	node* find = calloc(0, sizeof(node));
+	find = list_head;
+	while (number--)
+	{
+		if (!find->next) return -1;
+		find = find->next;
+	}
+	return find->data;
+}
+
+int delete(int number)
+{
+	if (number == 1) return -1;
+	node* de = calloc(0, sizeof(node));
+	node* pre = calloc(0, sizeof(node));
+	de = list_head;
+	int i = number;
+	while (--i&&de)
+	{
+		pre = de;
+		de = de->next;
+	} 
+	if (i||!de) return -1;
+	pre->next = de->next;
+	printf("\n\n%d HAS BEEN DELETED!\n\n", de->data);
+	return de->data;
+}
+
+int search(int num)
+{
+	int ans = 1;
+	node* found = calloc(0, sizeof(node));
+	found = list_head;
+	while (found->data != num)
+	{
+		if (!found->next) return -1;
+		found = found->next;
+		ans++;
+	}
+	printf("\n\nYour number in %d.\n\n", ans);
+	return ans;
+}
+
+void show()
+{
+	node* show = calloc(0, sizeof(node));
+	show = list_head->next;
+	for (; show; show = show->next) printf("\n%d\n", show->data);
+}
+
+int main()
+{
+	printf("Welcome to data base ver.1.0.\n\nWill you want to use my work?\n\nClick Yes or No ,please.\n\n");
+	char ans[10];
+	scanf("%s", ans);
+	if (ans[0] == 'n' || ans[0] == 'N') return 0;
+	create();
+	printf("Alright ,which serves ,please.\n\n");
+	
+	while(1)
+	{
+		    getchar();
+		    printf("1.Save data.\n\n2.Mathematicl calculation.\n\n3.Delete data.\n\n4.Search data.\n\n5.Show me my link list.\n\n9.EXIT!\n\n");
+			int choose;
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				printf("\n\nHow many data will you want to save?\n\n");
+				int ans1;
+				scanf("%d", &ans1);
+				while (ans1--)
+				{
+					printf("\n");
+					int a;
+					scanf("%d", &a);
+					insert(a);
+				}
+				printf("\n\nOk ,is over.\n\n");
+				getchar();
+				break;
+			case 2:
+				printf("\n\nI am lazy ,so the function is not be created.\n\n");
+				getchar();
+				break;
+			case 3:
+				printf("Input serial which mapping number is you want to delete.\n\n");
+				int ans2;
+				scanf("%d", &ans2);
+				if (delete(ans2) == -1) printf("ERROR!");
+				getchar();
+				break;
+			case 4:
+				printf("\n\nInput which number you want to search.\n\n");
+				int ans3;
+				scanf("%d", &ans3);
+				if (search(ans3)==-1) printf("ERROR!");
+				getchar();
+				break;
+			case 5:
+				printf("Ok ,alright.\n\n" );
+				getchar();
+				show();
+				break;
+			case 9:
+				printf ("\n\nAre you SURE ???\n\nExit by click yes ,or click no to continue:\n\n");
+				getchar();
+				char ans4[10];
+				scanf("%s", ans4);
+				if (ans4[0] == 'n') break;
+				else
+				{
+					printf("\n\nGoodbye!\n\nClick any key to exit it.\n\n");
+					getchar();
+					getchar();
+					return 0;
+				}
+			}
+	}
+	return 0;
+}
